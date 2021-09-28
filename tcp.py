@@ -137,15 +137,9 @@ def tcp_receive(listen_port):
     :param int listen_port: Port number on the server to listen on
     """
 
-    # Replace this comment with your code.
+
     print('tcp_receive (server): listen_port={0}'.format(listen_port))
-
-    listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listen_socket.bind(('', listen_port))
-    listen_socket.listen(1)
-    data_socket, sender_address = listen_socket.accept()
-
-    return data_socket
+    # Replace this comment with your code.
 
 
 # Add more methods here (Delete this line)
@@ -165,6 +159,7 @@ def next_byte(data_socket):
                         server's listening socket.
     :return: the next byte, as a bytes object with a single byte in it
     """
+    
     return data_socket.recv(1)
 
 
