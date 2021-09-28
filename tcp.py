@@ -122,6 +122,14 @@ def tcp_send(server_host, server_port):
 
     tcp_socket.close()
 
+def read_header():
+    print("heard")
+
+def read_line():
+    print("readLine")
+
+def write_to_text_file():
+    print("writeToText")
 
 def tcp_receive(listen_port):
     """
