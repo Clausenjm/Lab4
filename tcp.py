@@ -145,6 +145,7 @@ def tcp_receive(listen_port):
     listen_socket.listen(1)
     data_socket, sender_address = listen_socket.accept()
 
+    return data_socket
 
 
 # Add more methods here (Delete this line)
