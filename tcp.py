@@ -123,7 +123,6 @@ def tcp_send(server_host, server_port):
     tcp_socket.close()
 
 
-
 def tcp_receive(listen_port):
     """
     - Listen for a TCP connection on a designated "listening" port
@@ -138,7 +137,6 @@ def tcp_receive(listen_port):
     :param int listen_port: Port number on the server to listen on
     """
 
-
     print('tcp_receive (server): listen_port={0}'.format(listen_port))
     # Replace this comment with your code.
 
@@ -147,18 +145,34 @@ def tcp_receive(listen_port):
     listen_socket.listen(1)
     data_socket, sender_address = listen_socket.accept()
 
-    return data_socket
+    read_messages(data_socket)
+
 
 # Add more methods here (Delete this line)
+def read_messages(data_socket):
+    read_header(data_socket)
 
-def read_header():
-    print("heard")
+
+def read_header(data):
+    """
+    - reads the 4 byte header
+    """
+    print(next_byte(data))
+
 
 def read_line():
+    """
+    - reads the 4 byte header
+    """
     print("readLine")
 
+
 def write_to_text_file():
+    """
+    - reads the 4 byte header
+    """
     print("writeToText")
+
 
 def next_byte(data_socket):
     """
@@ -174,7 +188,7 @@ def next_byte(data_socket):
                         server's listening socket.
     :return: the next byte, as a bytes object with a single byte in it
     """
-    
+
     return data_socket.recv(1)
 
 
