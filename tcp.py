@@ -153,11 +153,11 @@ def read_messages(data_socket):
     read_header(data_socket)
 
 
-def read_header(data):
+def read_header(data_socket):
     """
     - reads the 4 byte header
     """
-    print(next_byte(data))
+    print(next_byte(data_socket).decode()+"asdfdsaf")
 
 
 def read_line():
