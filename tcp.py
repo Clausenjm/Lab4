@@ -150,7 +150,7 @@ def tcp_receive(listen_port):
 
 # Add more methods here (Delete this line)
 def read_message(data_socket):
-    read_line(read_header(data_socket), data_socket)
+    write_to_text_file(read_line(read_header(data_socket), data_socket))
 
 
 def read_header(data_socket):
@@ -168,18 +168,22 @@ def read_header(data_socket):
 
 def read_line(line_amount, data_socket):
     """
-    - reads the 4 byte header
+    - creates lines of text character by character
+    -
     """
-    line = ''
-    for i in range(0,line_amount):
+    for i in range(0, line_amount):
+        line = ''
+
         char = next_byte(data_socket).decode()
         while char != '\n':
             line = line + char
             char = next_byte(data_socket).decode()
-    print("readLine")
+
+        print(line)
+        return line
 
 
-def write_to_text_file():
+def write_to_text_file(text_block):
     """
     - reads the 4 byte header
     """
