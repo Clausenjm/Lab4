@@ -145,25 +145,37 @@ def tcp_receive(listen_port):
     listen_socket.listen(1)
     data_socket, sender_address = listen_socket.accept()
 
-    read_messages(data_socket)
+    read_message(data_socket)
 
 
 # Add more methods here (Delete this line)
-def read_messages(data_socket):
-    read_header(data_socket)
+def read_message(data_socket):
+    read_line(read_header(data_socket), data_socket)
 
 
 def read_header(data_socket):
     """
     - reads the 4 byte header
     """
-    print(next_byte(data_socket).decode()+"asdfdsaf")
+    b1 = int.from_bytes(next_byte(data_socket), 'big')
+    b2 = int.from_bytes(next_byte(data_socket), 'big')
+    b3 = int.from_bytes(next_byte(data_socket), 'big')
+    b4 = int.from_bytes(next_byte(data_socket), 'big')
+    header = 2048*b1 + 256*b2 + 16*b3 + b4
+    print(header)
+    return header
 
 
-def read_line():
+def read_line(line_amount, data_socket):
     """
     - reads the 4 byte header
     """
+    line = ''
+    for i in range(0,line_amount):
+        char = next_byte(data_socket).decode()
+        while char != '\n':
+            line = line + char
+            char = next_byte(data_socket).decode()
     print("readLine")
 
 
