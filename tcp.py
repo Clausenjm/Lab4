@@ -157,11 +157,8 @@ def read_header(data_socket):
     """
     - reads the 4 byte header
     """
-    b1 = int.from_bytes(next_byte(data_socket), 'big')
-    b2 = int.from_bytes(next_byte(data_socket), 'big')
-    b3 = int.from_bytes(next_byte(data_socket), 'big')
-    b4 = int.from_bytes(next_byte(data_socket), 'big')
-    header = 2048*b1 + 256*b2 + 16*b3 + b4
+    b_list = [next_byte(data_socket), next_byte(data_socket), next_byte(data_socket), next_byte(data_socket)]
+    header = int.from_bytes(b_list, 'big')
     print(header)
     return header
 
