@@ -139,24 +139,27 @@ def tcp_receive(listen_port):
 
     print('tcp_receive (server): listen_port={0}'.format(listen_port))
     # Replace this comment with your code.
-    message_number = 0
+    message_number = 1
     server_is_open = True
-
-    listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listen_socket.bind(('', listen_port))
-
     while server_is_open:
+        message_number += 1
+        listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        listen_socket.bind(('', listen_port))
         listen_socket.listen(1)
         data_socket, sender_address = listen_socket.accept()
 
-        if read_message(data_socket, message_number):
-            data_socket.send(b'A')
-            tcp_receive(listen_port)
-        else:
-            data_socket.send(b'Q')
-            server_is_open = False
-            data_socket.close()
-            listen_socket.close()
+        while listen_socket:
+            if read_message(data_socket, message_number):
+                data_socket.send(b'A')
+                message_number =+ 1
+
+            else:
+                data_socket.send(b'Q')
+                server_is_open = False
+                data_socket.close()
+                listen_socket.close()
+
+
 
 
 # Add more methods here (Delete this line)
@@ -164,7 +167,7 @@ def read_message(data_socket, number):
     length = read_header(data_socket)
     is_not_empty = True
     if length != 0:
-        write_to_text_file(read_line(length, data_socket), number + 1)
+        write_to_text_file(read_line(length, data_socket), number)
     else:
         is_not_empty = False
     return is_not_empty
@@ -174,10 +177,12 @@ def read_header(data_socket):
     """
     - reads the 4 byte header
     """
-    b_list = [next_byte(data_socket), next_byte(data_socket), next_byte(data_socket), next_byte(data_socket)]
-    header = b_list.pop() + b_list.pop() + b_list.pop() + b_list.pop()
-    header = int.from_bytes(header, 'little')
-    print(header)
+    if data_socket != 0:
+        b_list = [next_byte(data_socket), next_byte(data_socket), next_byte(data_socket), next_byte(data_socket)]
+        header = b_list.pop() + b_list.pop() + b_list.pop() + b_list.pop()
+        header = int.from_bytes(header, 'little')
+        print(header)
+
     return header
 
 
@@ -186,27 +191,28 @@ def read_line(line_amount, data_socket):
     - creates lines of text character by character
     -
     """
+    line = ''
     for i in range(0, line_amount):
-        line = ''
 
         char = next_byte(data_socket).decode()
         while char != '\n':
             line = line + char
             char = next_byte(data_socket).decode()
 
-        print(line)
-        return line
+        line += '\r\n'
+
+    print(line)
+    return line
 
 
 def write_to_text_file(text_block, message_num):
     """
     - reads the 4 byte header
-
+    -:param text_block: gets the text from the server in string form and writes it to a bytes file
+    -:param message_num: keeps track of the message being sent from 1, 2, 3..... etc is and int
     """
-    b = text_block.encode('ASCII')
-
-    output_file = open('txt.txt', "wb")
-    output_file.write(b)
+    output_file = open('message'+str(message_num)+'.txt', "wb")
+    output_file.write(text_block.encode('ASCII') + b'\r\n')
 
 
 def next_byte(data_socket):
