@@ -168,13 +168,14 @@ def read_message(data_socket, number):
         -:param number: this number is used to increment the value of the file name so each message is saved
         - to a different file
         """
-    length = read_header(data_socket)
-    is_not_empty = True
-    if length != 0:
-        write_to_text_file(read_line(length, data_socket), number)
-    else:
-        is_not_empty = False
-    return is_not_empty
+    if data_socket.notequals(None):
+        length = read_header(data_socket)
+        is_not_empty = True
+        if length != 0:
+            write_to_text_file(read_line(length, data_socket), number)
+        else:
+            is_not_empty = False
+        return is_not_empty
 
 
 def read_header(data_socket):
