@@ -164,6 +164,10 @@ def tcp_receive(listen_port):
 
 # Add more methods here (Delete this line)
 def read_message(data_socket, number):
+    """
+        - reads the 4 byte header
+        -:param data_socket: the data socket that will be used to access the bytes and read the
+        """
     length = read_header(data_socket)
     is_not_empty = True
     if length != 0:
@@ -176,6 +180,7 @@ def read_message(data_socket, number):
 def read_header(data_socket):
     """
     - reads the 4 byte header
+    -:param data_socket: the data socket that will be used to access the bytes and read the
     """
     if data_socket != 0:
         b_list = [next_byte(data_socket), next_byte(data_socket), next_byte(data_socket), next_byte(data_socket)]
@@ -207,11 +212,14 @@ def read_line(line_amount, data_socket):
 
 def write_to_text_file(text_block, message_num):
     """
-    - reads the 4 byte header
+    - takes in a text block and the message number to write to a file and create one
+    - the text block is converted to to bytes and writen to a byte file
+    - a new text file is writen with increasing value such as 1.txt, 2.txt... and so on
+    - if the server is restarted old files will be over written
     -:param text_block: gets the text from the server in string form and writes it to a bytes file
     -:param message_num: keeps track of the message being sent from 1, 2, 3..... etc is and int
     """
-    output_file = open('message'+str(message_num)+'.txt', "wb")
+    output_file = open(str(message_num)+'.txt', "wb")
     output_file.write(text_block.encode('ASCII') + b'\r\n')
 
 
