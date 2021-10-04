@@ -139,7 +139,7 @@ def tcp_receive(listen_port):
 
     print('tcp_receive (server): listen_port={0}'.format(listen_port))
     # Replace this comment with your code.
-    message_number = 1
+    message_number = 0
     server_is_open = True
     while server_is_open:
         message_number += 1
@@ -151,12 +151,11 @@ def tcp_receive(listen_port):
         while listen_socket:
             if read_message(data_socket, message_number):
                 data_socket.send(b'A')
-                message_number = + 1
+                message_number += 1
 
             else:
                 data_socket.send(b'Q')
                 server_is_open = False
-                data_socket.close()
                 listen_socket.close()
 
 
@@ -168,14 +167,18 @@ def read_message(data_socket, number):
         -:param number: this number is used to increment the value of the file name so each message is saved
         - to a different file
         """
-    if data_socket.notequals(None):
+    is_not_empty = False
+    try:
         length = read_header(data_socket)
+
         is_not_empty = True
         if length != 0:
             write_to_text_file(read_line(length, data_socket), number)
         else:
             is_not_empty = False
-        return is_not_empty
+    except OSError:
+        print('messages have ended')
+    return is_not_empty
 
 
 def read_header(data_socket):
