@@ -2,7 +2,7 @@
 - NOTE: REPLACE 'N' Below with your section, year, and lab number
 - CS2911 - 0NN
 - Fall 202N
-- Lab N
+- Lab 4 receive messages
 - Names:
   - Josiah Clausen
   - Elisha Hamp
@@ -125,6 +125,7 @@ def tcp_send(server_host, server_port):
 
 def tcp_receive(listen_port):
     """
+    - programed by Josiah Clausen
     - Listen for a TCP connection on a designated "listening" port
     - Accept the connection, creating a connection socket
     - Print the address and port of the sender
@@ -156,7 +157,9 @@ def tcp_receive(listen_port):
             else:
                 data_socket.send(b'Q')
                 server_is_open = False
-                listen_socket.close()
+
+    listen_socket.close()
+    data_socket.close()
 
 
 # Add more methods here (Delete this line)
@@ -217,6 +220,7 @@ def read_line(line_amount, data_socket):
 
 def write_to_text_file(text_block, message_num):
     """
+    - programed by Josiah Clausen
     - takes in a text block and the message number to write to a file and create one
     - the text block is converted to to bytes and writen to a byte file
     - a new text file is writen with increasing value such as 1.txt, 2.txt... and so on
