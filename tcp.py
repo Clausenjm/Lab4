@@ -197,11 +197,10 @@ def read_header(data_socket):
     - gets the first 4 bytes of the data socket and reads how many lines the file contains
     -:param Socket data_socket: the data socket that will be used to access the bytes and read the
     """
+    header = 0
     if data_socket != 0:
-        b_list = [next_byte(data_socket), next_byte(data_socket), next_byte(data_socket), next_byte(data_socket)]
-        header = b_list.pop() + b_list.pop() + b_list.pop() + b_list.pop()
-        header = int.from_bytes(header, 'little')
-        print(header)
+        header_bytes = next_byte(data_socket) + next_byte(data_socket) + next_byte(data_socket) + next_byte(data_socket)
+        header = int.from_bytes(header_bytes, 'big')
 
     return header
 
