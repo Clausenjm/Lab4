@@ -140,13 +140,14 @@ def tcp_receive(listen_port):
 
     print('tcp_receive (server): listen_port={0}'.format(listen_port))
     # Replace this comment with your code.
-    message_number = 1
+    message_number = 0
     listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     listen_socket.bind(('', listen_port))
     listen_socket.listen(1)
     data_socket, sender_address = listen_socket.accept()
 
     while listen_socket:
+        message_number += 1
         listen_socket = read_messages(data_socket, message_number)
 
     data_socket.close()
@@ -155,14 +156,13 @@ def tcp_receive(listen_port):
 def read_messages(data_socket, message_number):
     """
     -programed by Josiah Clausen
-    - gets the first 4 bytes of the data socket and reads how many lines the file contains
+    - runs a loop to make
     -:param Socket data_socket: the data socket that will be used to access the bytes and read the
     -:param int message_number: the number of the message being sent to keep track of what file it is saved to
     """
     var_return = True
     if read_message(data_socket, message_number):
         data_socket.send(b'A')
-        message_number += 1
     else:
         data_socket.send(b'Q')
         var_return = False
@@ -221,7 +221,6 @@ def read_line(line_amount, data_socket):
 
         line += '\r\n'
 
-    print(line)
     return line
 
 
