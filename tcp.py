@@ -4,8 +4,8 @@
 - Fall 202N
 - Lab N
 - Names:
-  - 
-  - 
+  - Josiah Clausen
+  - Elisha Hamp
 
 A simple TCP server/client pair.
 
@@ -163,8 +163,8 @@ def tcp_receive(listen_port):
 def read_message(data_socket, number):
     """
         - reads the 4 byte header
-        -:param data_socket: the data socket that will be used to access the bytes and read the
-        -:param number: this number is used to increment the value of the file name so each message is saved
+        -:param Socket data_socket: the data socket that will be used to access the bytes and read the
+        -:param int number: this number is used to increment the value of the file name so each message is saved
         - to a different file
         """
     is_not_empty = False
@@ -184,7 +184,7 @@ def read_message(data_socket, number):
 def read_header(data_socket):
     """
     - gets the first 4 bytes of the data socket and reads how many lines the file contains
-    -:param data_socket: the data socket that will be used to access the bytes and read the
+    -:param Socket data_socket: the data socket that will be used to access the bytes and read the
     """
     if data_socket != 0:
         b_list = [next_byte(data_socket), next_byte(data_socket), next_byte(data_socket), next_byte(data_socket)]
@@ -198,8 +198,8 @@ def read_header(data_socket):
 def read_line(line_amount, data_socket):
     """
     - creates lines of text character by character
-    -:param line_amount: gets an int for the amount of lines that are in the text file
-    -:param data_socket: the data socket is used to retrieve the rest of the message after the header has been read
+    -:param String line_amount: gets an int for the amount of lines that are in the text file
+    -:param Socket data_socket: the data socket is used to retrieve the rest of the message after the header has been read
     """
     line = ''
     for i in range(0, line_amount):
@@ -221,8 +221,8 @@ def write_to_text_file(text_block, message_num):
     - the text block is converted to to bytes and writen to a byte file
     - a new text file is writen with increasing value such as 1.txt, 2.txt... and so on
     - if the server is restarted old files will be over written
-    -:param text_block: gets the text from the server in string form and writes it to a bytes file
-    -:param message_num: keeps track of the message being sent from 1, 2, 3..... etc is and int
+    -:param String text_block: gets the text from the server in string form and writes it to a bytes file
+    -:param int message_num: keeps track of the message being sent from 1, 2, 3..... etc is and int
     """
     output_file = open(str(message_num) + '.txt', "wb")
     output_file.write(text_block.encode('ASCII') + b'\r\n')
