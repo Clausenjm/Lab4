@@ -235,7 +235,7 @@ def write_to_text_file(text_block, message_num):
     -:param int message_num: keeps track of the message being sent from 1, 2, 3..... etc is and int
     """
     output_file = open(str(message_num) + '.txt', "wb")
-    output_file.write(text_block.encode('ASCII') + b'\r\n')
+    output_file.write(text_block.encode('ASCII'))
 
 
 def next_byte(data_socket):
