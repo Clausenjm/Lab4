@@ -9,7 +9,9 @@
 
 A simple TCP server/client pair.
 
-The application protocol is a simple format: For each file uploaded, the client first sends four (big-endian) bytes indicating the number of lines as an unsigned binary number.
+The application protocol is a simple format:
+For each file uploaded, the client first sends four (big-endian) bytes
+indicating the number of lines as an unsigned binary number.
 
 The client then sends each of the lines, terminated only by '\\n' (an ASCII LF byte).
 
@@ -18,12 +20,21 @@ The server responds with 'A' when it accepts the file.
 Then the client can send the next file.
 
 
-Introduction: (Describe the lab in your own words)
+Introduction:
+This lab is designed to familiarize students with tcp and parsing data from a data socket.
+This is accomplished by having the students design and write a tcp server which can receive
+and parse multiple messages from a client.
 
 
 
-
-Summary: (Summarize your experience with the lab, what you learned, what you liked, what you disliked, and any suggestions you have for improvement)
+Summary:
+This lab was tough but manageable for our group. We had difficulty initially with keeping the server open
+for multiple messages, but were able to solve it after implementing a loop that confirmed that the data socket
+receiving messages from the client was still getting proper data for the program to parse. The best part of the
+lab was writing a server which could maintain a stable connection with the client until the client told it to close.
+The worst part was initial confusion surrounding the next_byte method, but this was mitigated with assistance
+from the teacher and re-reading the assignment page. This lab was well structured and pushed us, while still
+not being too difficult for us to accomplish in the given time.
 
 
 
@@ -159,6 +170,7 @@ def read_messages(data_socket, message_number):
     - runs a loop to make
     -:param Socket data_socket: the data socket that will be used to access the bytes and read the
     -:param int message_number: the number of the message being sent to keep track of what file it is saved to
+    -:return boolean true or false depending on whether the socket still needs to listen.
     """
     var_return = True
     if read_message(data_socket, message_number):
@@ -170,9 +182,9 @@ def read_messages(data_socket, message_number):
     return var_return
 
 
-# Add more methods here (Delete this line)
 def read_message(data_socket, number):
     """
+        - programmed by Elisha Hamp
         - reads the 4 byte header
         -:param Socket data_socket: the data socket that will be used to access the bytes and read the
         -:param int number: this number is used to increment the value of the file name so each message is saved
@@ -194,6 +206,7 @@ def read_message(data_socket, number):
 
 def read_header(data_socket):
     """
+    - programmed by Elisha Hamp
     - gets the first 4 bytes of the data socket and reads how many lines the file contains
     -:param Socket data_socket: the data socket that will be used to access the bytes and read the
     """
@@ -207,9 +220,10 @@ def read_header(data_socket):
 
 def read_line(line_amount, data_socket):
     """
+    - programmed by Elisha Hamp
     - creates lines of text character by character
     -:param String line_amount: gets an int for the amount of lines that are in the text file
-    -:param Socket data_socket: the data socket is used to retrieve the rest of the message after the header has been read
+    -:param Socket data_socket: the data socket is used to retrieve all parts of the message after the header
     """
     line = ''
     for i in range(0, line_amount):
